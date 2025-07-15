@@ -82,21 +82,6 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
         dispatch({ type: "SET_LOADING", payload: true })
         const { jsonConfig, originalJsonConfig, parsedDevices, deviceProfiles } = await loadConfiguration()
 
-        // Initialize GPX related settings if they don't exist
-        const privacySettings = jsonConfig.privacy || {}
-        if (privacySettings.spoofGpsTrack === undefined) privacySettings.spoofGpsTrack = false
-        if (privacySettings.spoofGpsTrackPath === undefined) privacySettings.spoofGpsTrackPath = ""
-        if (privacySettings.spoofGpsTrackDuration === undefined) privacySettings.spoofGpsTrackDuration = 60
-        if (privacySettings.spoofGpsTrackUseElevationFromFile === undefined)
-          privacySettings.spoofGpsTrackUseElevationFromFile = false
-        if (privacySettings.spoofGpsTrackBounceMode === undefined) privacySettings.spoofGpsTrackBounceMode = false
-        if (privacySettings.spoofGpsTrackStartInPausedMode === undefined)
-          privacySettings.spoofGpsTrackStartInPausedMode = false
-        if (privacySettings.spoofGpsTracks === undefined) privacySettings.spoofGpsTracks = []
-        if (privacySettings.spoofGpsTrackIndex === undefined) privacySettings.spoofGpsTrackIndex = 0
-
-        jsonConfig.privacy = privacySettings // Ensure privacy category exists and is updated
-
         dispatch({
           type: "SET_CONFIG",
           payload: { jsonConfig, originalJsonConfig },
